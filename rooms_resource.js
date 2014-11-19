@@ -40,7 +40,11 @@ RoomsResource.prototype.init = function(config) {
 };
 
 RoomsResource.prototype.list = function(env, next) {
-  env.response.body = this.rooms;
+  var self = this;
+  env.response.body = Object.keys(this.rooms).reduce(function(body, id) {
+    body[id] = { switches:  self.rooms[id] };
+    return body;
+  }, {});
   next(env);
 };
 
